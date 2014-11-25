@@ -29,14 +29,14 @@ $ [bundle exec] rake test
 ```
 <source>
   type unix_unimsg
-  path /path/a.sock
-  tag debug.pp
-  key data
-  use_abstract true
+  path /foo/bar/a.sock
+  use_abstract true    # default false
+  tag good.tag          # default debug.print
+  key content          # default data
 </source>
 
-$ echo "Content" | socat - abstract-connect:/path/a.sock
-=> debug.pp | {"data": "Content"}
+$ echo "Content" | socat - unix-connect:/foo/bar/a.sock
+=> good.tag | {"data": "Content"}
 ```
 
 EOT

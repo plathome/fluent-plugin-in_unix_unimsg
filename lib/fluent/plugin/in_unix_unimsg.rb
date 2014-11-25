@@ -1,22 +1,4 @@
-=begin
-config:
-<source>
-  type unix_unimsg
-  path /foo/bar/a.sock
-  use_abstract true    # default false
-  tag debug.output     # default debug.print
-  key content          # default data
-</source>
-
-exec:
-$ echo -ne "aaaa\nsbbb" | socat stdin abstract-connect:/foo/bar/a.sock
-
-test:
-chunk$ cat 17kbfile.txt | socat stdin abstract-connect:/foo/bar/a.sock
-
-note:
-本来なら、in_streamを置換、もしくはin_unix_altとして作るべきだが、そこまでの技量がない
-=end
+# coding: utf-8
 module Fluent
   class UniMsgHandler < StreamInput::Handler
     def initialize(io, opts, on_message)
