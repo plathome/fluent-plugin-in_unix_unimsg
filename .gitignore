@@ -13,4 +13,6 @@
 *.a
 mkmf.log
 /vendor/bundle/
+.ruby-version
+.rvmrc
 
