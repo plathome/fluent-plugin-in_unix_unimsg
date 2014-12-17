@@ -30,13 +30,14 @@ $ [bundle exec] rake test
 <source>
   type unix_unimsg
   path /foo/bar/a.sock
-  use_abstract true    # default false
-  tag good.tag          # default debug.print
-  key content          # default data
+  use_abstract true         # default false
+  tag good.tag              # default debug.print
+  key content               # default data
+  in_str_encoding Shift_JIS # default UTF-8
 </source>
 
-$ echo "Content" | socat - unix-connect:/foo/bar/a.sock
-=> good.tag | {"data": "Content"}
+$ echo "MessageData" | socat - unix-connect:/foo/bar/a.sock
+=> good.tag | {"content": "MessageData"}
 ```
 
 EOT
