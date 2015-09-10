@@ -1,7 +1,7 @@
 # vim:fileencoding=utf-8
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-in_unix_unimsg"
-  spec.version       = "0.0.2"
+  spec.version       = "0.0.3"
   spec.authors       = ["Kohei MATSUSHITA"]
   spec.email         = ["ma2shita+git@ma2shita.jp"]
   spec.summary       = %q{Processing a uni message via Unix Domain Socket}
