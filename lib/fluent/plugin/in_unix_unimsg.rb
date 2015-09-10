@@ -1,5 +1,7 @@
 # vim:fileencoding=utf-8
 module Fluent
+  class UnixUnimsgInputInvalidInput < StandardError ; end
+
   class UniMsgHandler < StreamInput::Handler
     def initialize(io, opts, on_message)
       @tag = opts[:tag]
@@ -51,6 +53,24 @@ module Fluent
       s.listen(@backlog) unless @backlog.nil?
       s
     end
+
+    # NOTE: Overwrite for rescue of BufferQueueLimitError exception from original in_stream.rb
+    private
+    def on_message(msg)
+      begin
+        raise UnixUnimsgInputInvalidInput if msg[1].class != Fixnum # TODO: NoTEST
+
+        record = msg[2]
+        return if record.nil?
+
+        tag = msg[0].to_s
+        time = msg[1]
+        time = Engine.now if time == 0
+        router.emit(tag, time, record)
+      rescue BufferQueueLimitError, UnixUnimsgInputInvalidInput => e # TODO: NoTEST
+        log.debug "#{e.message} (ignore): #{msg.inspect[0..99]}"
+        return # NOTE: Nothing todo
+      end
+    end
   end
 end
-
