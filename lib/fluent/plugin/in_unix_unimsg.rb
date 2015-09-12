@@ -67,7 +67,7 @@ module Fluent
         time = msg[1]
         time = Engine.now if time == 0
         router.emit(tag, time, record)
-      rescue BufferQueueLimitError, UnixUnimsgInputInvalidInput => e # TODO: NoTEST
+      rescue BufferQueueLimitError, Errno::ENOSPC, UnixUnimsgInputInvalidInput => e # TODO: NoTEST
         log.debug "#{e.message} (ignore): #{msg.inspect[0..99]}"
         return # NOTE: Nothing todo
       end
